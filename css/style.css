@@ -518,6 +518,14 @@ h1.h-xl { font-size: clamp(34px, 5.2vw, 56px); }
 .page-hero p { color: var(--gray-300); max-width: 620px; font-size: 16px; }
 
 .country-chip-list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.topic-tabs { display:flex; flex-wrap:wrap; gap:8px; padding:20px 0; border-bottom:1px solid var(--gray-100); margin-bottom:8px; }
+.topic-tabs a { padding:10px 16px; border-radius:999px; font-size:13.5px; font-weight:600; color:var(--gray-800); background:var(--gray-50); white-space:nowrap; }
+.topic-tabs a:hover { background:var(--gold-100); color:var(--gold-600); }
+.topic-tabs a.active { background:var(--navy-900); color:#fff; }
+.video-embed { position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:var(--radius-md); background:var(--gray-100); margin:24px 0; }
+.video-embed iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:0; }
+.video-embed .video-placeholder { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; color:var(--gray-400); font-size:14px; }
+
 .country-chip {
   background: rgba(255,255,255,.08);
   border: 1px solid rgba(255,255,255,.16);
