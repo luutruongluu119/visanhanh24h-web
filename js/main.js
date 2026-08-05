@@ -54,6 +54,38 @@ document.addEventListener("DOMContentLoaded", function () {
     revealEls.forEach(function (el) { el.classList.add("in"); });
   }
 
+  // Hero slider
+  var slider = document.getElementById("heroSlider");
+  if (slider) {
+    var slides = slider.querySelectorAll(".hero-slide");
+    var dots = slider.querySelectorAll(".slider-dots button");
+    var current = 0;
+    var timer;
+
+    function goTo(index) {
+      slides[current].classList.remove("active");
+      dots[current].classList.remove("active");
+      current = (index + slides.length) % slides.length;
+      slides[current].classList.add("active");
+      dots[current].classList.add("active");
+    }
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+    function startAutoplay() { timer = setInterval(next, 6000); }
+    function stopAutoplay() { clearInterval(timer); }
+
+    var nextBtn = slider.querySelector(".slider-arrow.next");
+    var prevBtn = slider.querySelector(".slider-arrow.prev");
+    if (nextBtn) nextBtn.addEventListener("click", function () { next(); stopAutoplay(); startAutoplay(); });
+    if (prevBtn) prevBtn.addEventListener("click", function () { prev(); stopAutoplay(); startAutoplay(); });
+    dots.forEach(function (dot, i) {
+      dot.addEventListener("click", function () { goTo(i); stopAutoplay(); startAutoplay(); });
+    });
+    slider.addEventListener("mouseenter", stopAutoplay);
+    slider.addEventListener("mouseleave", startAutoplay);
+    startAutoplay();
+  }
+
   // Contact form (demo submit handler — wire to real backend / Google Sheet / CRM before launch)
   var form = document.querySelector("#contact-form");
   if (form) {
