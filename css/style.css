@@ -223,15 +223,16 @@ h1.h-xl { font-size: clamp(34px, 5.2vw, 56px); }
 }
 .dropdown-panel a:hover { background: var(--gray-50); color: var(--gold-600); }
 
-.header-actions { display: flex; align-items: center; gap: 14px; }
-.header-phone { display: flex; align-items: center; gap: 10px; }
+.header-actions { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.header-phone { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .header-phone .icon-badge {
   width: 40px; height: 40px; border-radius: 50%;
   background: var(--gold-100); color: var(--gold-600);
   display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
 }
-.header-phone .num { font-weight: 700; color: var(--navy-900); font-size: 15px; }
-.header-phone .lbl { font-size: 11.5px; color: var(--gray-600); }
+.header-phone .num { font-weight: 700; color: var(--navy-900); font-size: 15px; white-space: nowrap; }
+.header-phone .lbl { font-size: 11.5px; color: var(--gray-600); white-space: nowrap; }
 
 .nav-toggle {
   display: none;
@@ -308,7 +309,18 @@ h1.h-xl { font-size: clamp(34px, 5.2vw, 56px); }
   padding: 28px;
   backdrop-filter: blur(6px);
 }
-.map-card svg { width: 100%; height: auto; }
+.map-card .map-photo {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+}
+.map-card .map-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.map-card .map-photo::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, rgba(6,14,31,.5) 0%, rgba(6,14,31,.15) 55%, rgba(217,182,74,.18) 100%);
+}
 .map-card .float-pill {
   position: absolute;
   background: var(--white);
@@ -413,6 +425,25 @@ h1.h-xl { font-size: clamp(34px, 5.2vw, 56px); }
   display: flex; align-items: center; justify-content: center;
   color: var(--gold-400);
   margin-bottom: 20px;
+}
+.service-card .photo {
+  width: 100%; height: 148px;
+  border-radius: 14px;
+  overflow: hidden;
+  margin: -32px -26px 20px;
+  width: calc(100% + 52px);
+  position: relative;
+}
+.service-card .photo img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform .5s ease;
+}
+.service-card:hover .photo img { transform: scale(1.08); }
+.service-card .photo::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(10,31,68,0) 55%, rgba(10,31,68,.55) 100%);
 }
 .service-card h3 { font-size: 20px; margin-bottom: 10px; }
 .service-card .countries { color: var(--gray-600); font-size: 14px; margin-bottom: 18px; flex-grow: 1; }
@@ -553,7 +584,17 @@ h1.h-xl { font-size: clamp(34px, 5.2vw, 56px); }
   background: radial-gradient(120% 160% at 90% -20%, var(--navy-700), var(--navy-950) 60%);
   color: var(--white);
   padding: 56px 0 64px;
+  position: relative;
+  overflow: hidden;
 }
+.page-hero-bg { position: absolute; inset: 0; z-index: 0; }
+.page-hero-bg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.page-hero-bg::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(100deg, rgba(6,14,31,.93) 30%, rgba(6,14,31,.72) 65%, rgba(6,14,31,.45) 100%);
+}
+.page-hero .container { position: relative; z-index: 1; }
 .page-hero .crumb { font-size: 13px; color: var(--gray-400); margin-bottom: 14px; }
 .page-hero .crumb a:hover { color: var(--gold-300); }
 .page-hero h1 { color: var(--white); font-size: clamp(28px, 4vw, 40px); margin-bottom: 12px; }
@@ -571,14 +612,19 @@ h1.h-xl { font-size: clamp(34px, 5.2vw, 56px); }
 .country-chip {
   background: rgba(255,255,255,.08);
   border: 1px solid rgba(255,255,255,.16);
-  padding: 8px 16px;
+  padding: 6px 16px 6px 6px;
   border-radius: 999px;
   font-size: 13.5px;
   font-weight: 600;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
   transition: background .15s ease, border-color .15s ease;
 }
+.country-chip:not(a) { padding: 8px 16px; }
 a.country-chip:hover { background: rgba(255,255,255,.18); border-color: var(--gold-400); }
+.chip-photo { width: 26px; height: 26px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 1px solid rgba(255,255,255,.3); }
+.chip-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .doc-list { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .doc-item { display: flex; gap: 12px; padding: 16px; background: var(--gray-50); border-radius: 12px; }
