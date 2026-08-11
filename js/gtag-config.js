@@ -8,4 +8,4 @@
 //   3. Copy Measurement ID dang "G-XXXXXXXXXX"
 //   4. Dan de len dong ben duoi, thay the "G-XXXXXXXXXX"
 // Truoc khi dan ID that, script se KHONG load gi ca (khong anh huong toc do site).
-window.GA_MEASUREMENT_ID = "G-XXXXXXXXXX";
+window.GA_MEASUREMENT_ID = "G-0TN8RDTKE1";
