@@ -93,6 +93,14 @@ document.addEventListener("DOMContentLoaded", function () {
       e.preventDefault();
       var successBox = document.querySelector("#form-success");
       if (successBox) successBox.style.display = "block";
+      var visaType = form.querySelector("#visa-type");
+      // GA4 recommended event — hien trong bao cao Events/Conversions cua GA4 ngay ca khi chua noi Google Ads
+      if (typeof gtag === "function") {
+        gtag("event", "generate_lead", {
+          form_id: "contact-form",
+          visa_type: visaType ? visaType.value : undefined,
+        });
+      }
       form.reset();
       // Google Ads conversion event — replace AW-XXXXXXX/label with real IDs from Google Ads
       if (typeof gtag === "function") {
@@ -109,6 +117,12 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("a[href^='tel:'], a.js-zalo-click").forEach(function (el) {
     el.addEventListener("click", function () {
       if (typeof gtag === "function") {
+        // GA4 event rieng cho tung kenh — de bao cao Events biet hotline hay Zalo hieu qua hon
+        var isZalo = el.classList.contains("js-zalo-click");
+        gtag("event", isZalo ? "contact_zalo_click" : "contact_hotline_click", {
+          link_url: el.getAttribute("href"),
+          page_path: window.location.pathname,
+        });
         gtag("event", "conversion", {
           send_to: "AW-XXXXXXXXX/yyyyyyyyyyyyyyyyy",
         });
