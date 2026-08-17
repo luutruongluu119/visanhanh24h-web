@@ -86,30 +86,59 @@ document.addEventListener("DOMContentLoaded", function () {
     startAutoplay();
   }
 
-  // Contact form (demo submit handler — wire to real backend / Google Sheet / CRM before launch)
+  // Contact form — gui that qua /api/contact.js (Resend), co xu ly thanh cong/that bai ro rang
   var form = document.querySelector("#contact-form");
   if (form) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var successBox = document.querySelector("#form-success");
-      if (successBox) successBox.style.display = "block";
+      var errorBox = document.querySelector("#form-error");
+      var submitBtn = form.querySelector("button[type=submit]");
       var visaType = form.querySelector("#visa-type");
-      // GA4 recommended event — hien trong bao cao Events/Conversions cua GA4 ngay ca khi chua noi Google Ads
-      if (typeof gtag === "function") {
-        gtag("event", "generate_lead", {
-          form_id: "contact-form",
-          visa_type: visaType ? visaType.value : undefined,
-        });
+      var payload = {
+        name: form.querySelector("#name") ? form.querySelector("#name").value : "",
+        phone: form.querySelector("#phone") ? form.querySelector("#phone").value : "",
+        "visa-type": visaType ? visaType.value : "",
+        note: form.querySelector("#note") ? form.querySelector("#note").value : "",
+      };
+
+      if (errorBox) errorBox.style.display = "none";
+      if (successBox) successBox.style.display = "none";
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.dataset.originalText = submitBtn.dataset.originalText || submitBtn.textContent;
+        submitBtn.textContent = "Đang gửi...";
       }
-      form.reset();
-      // Google Ads conversion event — replace AW-XXXXXXX/label with real IDs from Google Ads
-      if (typeof gtag === "function") {
-        gtag("event", "conversion", {
-          send_to: "AW-XXXXXXXXX/xxxxxxxxxxxxxxxxx",
+
+      fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error("Gui khong thanh cong");
+          if (successBox) successBox.style.display = "block";
+          // GA4 recommended event — hien trong bao cao Events/Conversions cua GA4 ngay ca khi chua noi Google Ads
+          if (typeof gtag === "function") {
+            gtag("event", "generate_lead", {
+              form_id: "contact-form",
+              visa_type: payload["visa-type"],
+            });
+            // Google Ads conversion event — replace AW-XXXXXXX/label with real IDs from Google Ads
+            gtag("event", "conversion", {
+              send_to: "AW-XXXXXXXXX/xxxxxxxxxxxxxxxxx",
+            });
+          }
+          form.reset();
+          if (submitBtn) submitBtn.textContent = "Đã gửi — cảm ơn bạn!";
+        })
+        .catch(function () {
+          if (errorBox) errorBox.style.display = "block";
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = submitBtn.dataset.originalText;
+          }
         });
-      }
-      form.querySelector("button[type=submit]") &&
-        (form.querySelector("button[type=submit]").textContent = "Đã gửi — cảm ơn bạn!");
     });
   }
 

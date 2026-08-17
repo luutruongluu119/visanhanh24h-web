@@ -550,6 +550,8 @@ h1.h-xl { font-size: clamp(34px, 5.2vw, 56px); }
 }
 .form-note { font-size: 12.5px; color: var(--gray-400); margin-top: 12px; }
 .form-success { display:none; background: #eaf7ee; border: 1px solid #bfe6c9; color: #1c6b34; padding: 14px 16px; border-radius: 10px; font-size: 14px; margin-bottom: 16px; }
+.form-error { display:none; background: #fdecea; border: 1px solid #f3c2bc; color: #a13327; padding: 14px 16px; border-radius: 10px; font-size: 14px; margin-bottom: 16px; }
+.form-error a { color: #a13327; font-weight: 700; text-decoration: underline; }
 
 /* ==================== FOOTER ==================== */
 .site-footer { background: var(--navy-950); color: var(--gray-400); }
