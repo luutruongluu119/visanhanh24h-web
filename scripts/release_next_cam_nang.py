@@ -19,7 +19,7 @@ CAM_NANG = os.path.join(REPO, "cam-nang.html")
 SITEMAP = os.path.join(REPO, "sitemap.xml")
 
 CARD_TMPL = '''      <div class="post-card reveal">
-        <div class="thumb"><img src="https://images.unsplash.com/{photo}?q=75&w=500&h=340&auto=format&fit=crop" alt="{alt}" loading="lazy" width="500" height="340"></div>
+        <div class="thumb"><img src="{photo_src}" alt="{alt}" loading="lazy" width="500" height="340"></div>
         <div class="body">
           <span class="cat">{category}</span>
           <h3><a href="{slug}.html" style="color:inherit;text-decoration:none;">{title}</a></h3>
@@ -28,6 +28,15 @@ CARD_TMPL = '''      <div class="post-card reveal">
         </div>
       </div>
 '''
+
+
+def photo_src_for(item: dict) -> str:
+    """Bài do app "Xưởng Viết Bài Web" xếp hàng có ảnh thật lưu trong repo
+    (photo_local); bài viết tay trước đó dùng ảnh Unsplash hotlink (photo)."""
+    if item.get("photo_local"):
+        return f"images/{item['photo_local']}"
+    return (f"https://images.unsplash.com/{item.get('photo', '')}"
+            "?q=75&w=500&h=340&auto=format&fit=crop")
 
 def main():
     if not os.path.exists(QUEUE_PATH):
@@ -61,7 +70,7 @@ def main():
     with open(CAM_NANG, "r", encoding="utf-8") as f:
         cam_html = f.read()
     card = CARD_TMPL.format(
-        photo=item["photo"], alt=item["post_title"], category=item["category"],
+        photo_src=photo_src_for(item), alt=item["post_title"], category=item["category"],
         slug=slug, title=item["post_title"], teaser=item["teaser"],
     )
     marker = '<div class="grid-3">\n'
