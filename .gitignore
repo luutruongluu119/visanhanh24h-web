@@ -5,3 +5,4 @@ node_modules/
 seo_audit_report.txt
 seo-tool/
 ho-so-tool/
+.credentials/
