@@ -567,6 +567,8 @@ h1.h-xl { font-size: clamp(34px, 5.2vw, 56px); }
 .social-row a { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; }
 .social-row a:hover { background: var(--gold-500); color: var(--navy-950); }
 .footer-legal { border-top: 1px solid rgba(255,255,255,.08); padding: 22px 0; font-size: 12.5px; display:flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.footer-legal .footer-license { flex-basis: 100%; color: rgba(255,255,255,.75); }
+
 
 /* ==================== FLOATING BUTTONS ==================== */
 .floating-actions { position: fixed; right: 20px; bottom: 20px; z-index: 150; display: flex; flex-direction: column; gap: 12px; }
