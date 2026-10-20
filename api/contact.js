@@ -3,7 +3,7 @@
 // Khong can domain rieng: dung dia chi gui mac dinh cua Resend (onboarding@resend.dev),
 // gui toi hop thu that cua cong ty.
 
-const TO_EMAIL = "visa@skywaytravel.vn";
+const TO_EMAIL = "info@skywaytravel.vn";
 const FROM_EMAIL = "Visa Nhanh 24h Website <onboarding@resend.dev>";
 
 function escapeHtml(str) {
