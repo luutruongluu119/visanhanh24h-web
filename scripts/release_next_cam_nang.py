@@ -11,6 +11,7 @@ Exits with code 0 and prints "NOTHING_TO_RELEASE" if the queue is empty/done,
 so the workflow can skip the commit step cleanly.
 """
 import json, os, re, sys, datetime
+from sync_company_info import normalize_company_info, source_footer
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STAGE_DIR = os.path.join(REPO, "_scheduled_cam_nang")
@@ -62,6 +63,7 @@ def main():
 
     with open(src, "r", encoding="utf-8") as f:
         page_html = f.read()
+    page_html = normalize_company_info(page_html, source_footer())
     with open(dst, "w", encoding="utf-8") as f:
         f.write(page_html)
     os.remove(src)
